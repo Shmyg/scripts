@@ -1,0 +1,30 @@
+SET PAGESIZE 0
+SET TRIMSPOOL ON
+SET LINESIZE 32767
+SET TAB OFF
+SET FEEDBACK OFF
+SET ECHO OFF
+SET VERIFY OFF
+SET TERMOUT OFF
+
+SPOOL a.sql
+
+SELECT	'DROP ' || object_type || ' ' || object_name || ';'
+FROM	user_objects
+WHERE	object_type IN
+	(
+	'TABLE',
+	'PACKAGE',
+	'DATABASE LINK',
+	'SEQUENCE',
+	'CONTEXT',
+	'VIEW'
+	);
+
+SPOOL OFF
+
+start a.sql
+
+!rm a.sql
+
+SET TERMOUT ON
